@@ -3,7 +3,7 @@
 // - Display that value inside a <div>
 // - Be reused wherever you want to show the counter
 
-const Display = ({ counter }) => 
-<div>{counter}</div>
+const Display = props => <div>{props.value}</div>
 
 export default Display
+

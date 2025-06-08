@@ -5,7 +5,7 @@
 // - Take a label (e.g. 'plus', 'zero', 'minus')
 // - Render a button with the correct behavior and label
 
-const Button = ({ onClick, text}) => 
-<button onClick={onClick}>{text}</button>
+
 
 export default Button
+
