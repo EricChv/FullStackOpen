@@ -45,8 +45,8 @@ const App = () => {
       <Button onClick={handleVote} text="vote"/>
       <Button onClick={handleNext} text="next anecdote" />
 
-{/* If the condition before && is true, it renders the expression after the &&.
-	•	If the condition is false, it renders nothing. */}
+    {/* If the condition before && is true, it renders the expression after the &&.
+	  •	If the condition is false, it renders nothing. */}
       {maxVotes > 0 && (
         <>
           <h2>Anecdote with most votes</h2>
