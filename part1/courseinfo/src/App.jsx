@@ -1,77 +1,61 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-const Button = ({onClick, text}) => (
+const Button = ({ onClick, text }) => (
   <button onClick={onClick}>{text}</button>
-)
-
-const Display = ({text, value}) => (
-  <div>{text}{value}</div>
-)
-
-// start component. here we call the renamed props
-const Statistics = ({ good, neutral, bad }) => {
-  const total = good + neutral + bad
-  const average = total > 0 ? (good - bad) / total : 0
-  const positive = total > 0 ? (good / total) * 100 : 0
-
-  if (total === 0) {
-    return <p>No feedback given</p>
-  }
-
-  return (
-    <table>
-      <tbody>
-        <tr>
-          <td>Good</td>
-          <td>┊{good}</td>
-        </tr>
-        <tr>
-          <td>Neutral</td>
-          <td>┊{neutral}</td>
-        </tr>
-        <tr>
-          <td>Bad</td>
-          <td>┊{bad}</td>
-        </tr>
-        <tr>
-          <td>Total</td>
-          <td>┊{total}</td>
-        </tr>
-        <tr>
-          <td>Average</td>
-          <td>┊{average}</td>
-        </tr>
-        <tr>
-          <td>Positive</td>
-          <td>┊{positive}%</td>
-        </tr>
-      </tbody>
-    </table>
-  )
-}
-// end component
+);
 
 const App = () => {
-  // save clicks of each button to its own state
-  const [goodCount, setGood] = useState(0)
-  const [neutralCount, setNeutral] = useState(0)
-  const [badCount, setBad] = useState(0)
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 90 percent of the development time... The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x‑rays or blood tests when diagnosing patients.',
+    'The only way to go fast, is to go well.',
+  ];
 
+  const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
+
+  // Click‑handler to choose a random index, log it, and update state
+  const handleNext = () => {
+    const rand = Math.floor(Math.random() * anecdotes.length);
+    console.log('New index:', rand, '\nAnecdote:', anecdotes[rand]);
+    setSelected(rand);
+  };
+
+  // Click‑handler to vote
+  const handleVote = () => {
+    const updatedVotes = [...votes];
+    updatedVotes[selected] += 1;
+    setVotes(updatedVotes)
+    console.log(`Voted for: "${anecdotes[selected]}". \nTotal votes: ${updatedVotes[selected]}`)
+  }
+
+  const maxVotes = Math.max(...votes);
+  const topAnecdoteIndex = votes.indexOf(maxVotes)
+ 
   return (
-    
     <div>
-      <h1>Give feedback</h1>
-      <div>
-        {/* this 'text=' is used to label the button */}
-        <Button onClick={() => setGood(goodCount + 1)} text="good" /> 
-        <Button onClick={() => setNeutral(neutralCount + 1)} text="neutral" />
-        <Button onClick={() => setBad(badCount + 1)} text="bad" />      
-      <h2>Statistics</h2>
-        {/* here we pass props and rename them to good, neutral, bad */}
-        <Statistics good={goodCount} neutral={neutralCount} bad={badCount} />
-      </div>
-    </div>
-  )
-}
+      <h2>Anecdote of the day</h2>
+      <p>{anecdotes[selected]}</p>
+      <p>Votes: {votes[selected]}</p>
+      <Button onClick={handleVote} text="vote"/>
+      <Button onClick={handleNext} text="next anecdote" />
 
-export default App
+{/* If the condition before && is true, it renders the expression after the &&.
+	•	If the condition is false, it renders nothing. */}
+      {maxVotes > 0 && (
+        <>
+          <h2>Anecdote with most votes</h2>
+          <p>{anecdotes[topAnecdoteIndex]}</p>
+          <p>Votes: {maxVotes}</p>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default App;
