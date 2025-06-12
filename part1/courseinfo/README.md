@@ -35,13 +35,12 @@ If you want to try it yourself:
 
 3.	Open http://localhost:3000 in your browser to see the app in action.
 
-📂 Project Structure
-
+## 📂 Project Structure
 courseinfo/
-├── App.js        # Main app logic and UI
-└── index.js      # Entry point for ReactDOM render
+- App.js        # Main app logic and UI
+- index.js      # Entry point for ReactDOM render
 
-📖 What I Learned
+## 📖 What I Learned
 - How to create and use React components
 - Managing state with the useState hook
 - Handling user events like clicks
