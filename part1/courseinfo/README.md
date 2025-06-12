@@ -23,17 +23,17 @@ If you want to try it yourself:
 
 1. Clone the repo and navigate to the project folder:
 
-   ```bash
-   git clone https://github.com/EricChv/FullStackOpen.git
-   cd FullStackOpen/part1/courseinfo
+	```bash
+	git clone https://github.com/EricChv/FullStackOpen.git
+	cd FullStackOpen/part1/courseinfo
 
-	2.	Install dependencies and start the app:
+2.	Install dependencies and start the app:
+	```bash
+	npm install
+        npm start
 
-npm install
-npm start
 
-
-	3.	Open http://localhost:3000 in your browser to see the app in action.
+3.	Open http://localhost:3000 in your browser to see the app in action.
 
 📂 Project Structure
 
