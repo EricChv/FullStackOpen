@@ -39,13 +39,11 @@ If you want to try it yourself:
 
 courseinfo/
 ├── App.js        # Main app logic and UI
-├── index.js      # Entry point for ReactDOM render
-└── components/
-    └── Button.js # Reusable button component (optional)
+└── index.js      # Entry point for ReactDOM render
 
 📖 What I Learned
-	•	How to create and use React components
-	•	Managing state with the useState hook
-	•	Handling user events like clicks
-	•	Rendering content conditionally
-	•	Working with arrays and updating UI dynamically
+- How to create and use React components
+- Managing state with the useState hook
+- Handling user events like clicks
+- Rendering content conditionally
+- Working with arrays and updating UI dynamically
