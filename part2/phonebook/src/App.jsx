@@ -3,15 +3,16 @@ import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import PersonsList from './components/PersonsList'
+import personService from './services/persons'
 
 const App = () => {
   // dummy data for testing
   const [persons, setPersons] = useState([])
     useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    personService //latest code
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, []) 
   const [newName, setNewName] = useState('')
@@ -21,6 +22,20 @@ const App = () => {
 // handle filter
 const handleFilterChange = (event) => {
   setFilter(event.target.value)
+}
+
+const handleDelete = (id) => {
+  if (window.confirm('Are you sure you want to delete this contact?')) {
+    personService
+      .deleteName(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id))
+      })
+      .catch(error => {
+        console.error('Error deleting person:', error)
+        alert('The contact could not be deleted. It may have already been removed from the server.')
+      })
+  }
 }
 
 // filter logic:
@@ -56,9 +71,14 @@ const addPerson = (event) => {
     number: newNumber,
     id: crypto.randomUUID()
   }
-  setPersons(persons.concat(personObject))
-  setNewName('')
-  setNewNumber('')
+
+  personService
+    .create(personObject)
+    .then(returnedPerson => {
+      setPersons(persons.concat(returnedPerson))
+      setNewName('')
+      setNewNumber('')
+    })
 }
 
   return (
@@ -76,7 +96,11 @@ const addPerson = (event) => {
       />
 
       <h2>Numbers</h2>
-      <PersonsList personsToShow={personsToShow} />
+      <PersonsList 
+        personsToShow={personsToShow} 
+        handleDelete={handleDelete}
+      />
+
     </div>
   )
 }
