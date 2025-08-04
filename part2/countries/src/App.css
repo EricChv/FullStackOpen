@@ -33,7 +33,7 @@ body {
   margin-bottom: 2.5rem;
   letter-spacing: -1px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(to right, var(--primary-color), #1ca4cd);
+  background: linear-gradient(to right, var(--primary-color), #101377);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -63,9 +63,22 @@ input:focus {
   outline: none;
 }
 
+button {
+  padding: 0.3rem 0.5rem;
+  margin-left: 1rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--box-shadow);
+}
+
 /* Country List */
 ul {
-  list-style-type: circle;
+  list-style-type: none;
   list-style-position: inside;
   padding: 0;
   margin: 1rem 0;

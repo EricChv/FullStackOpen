@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
 import countriesService from './services/countriesService'
 import Filter from './components/Filter'
+import CountryDetails from './components/CountryDetails';
 import './App.css'
 
 function App() {
   const [countries, setCountries] = useState([])
   const [filter, setFilter] = useState('')
+  const [selectedCountry, setSelectedCountry] = useState(null)
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value)
+    setSelectedCountry(null) // Reset selected country when filter changes
   }
 
   useEffect(() => {
@@ -19,7 +22,10 @@ function App() {
     country.name.common.toLowerCase().includes(filter.toLowerCase())
   )
 
-    console.log(filteredCountries)
+  const handleShow = (country) => {
+    console.log('Showing country:', country)
+    setSelectedCountry(country)
+  }
 
   return (
     <div>
@@ -37,26 +43,24 @@ function App() {
       */}
       {filteredCountries.length === 0 && <div>No countries found</div>}
       {filter && filteredCountries.length > 10 && <div>Too many matches, be more specific</div>}
-      {filteredCountries.length === 1 && (
-      <div className="country-details">
-        <h2 className="country-title">{filteredCountries[0].name.common}</h2>
-        <p>Capital: {filteredCountries[0].capital}</p>
-        <p>Population: {filteredCountries[0].population.toLocaleString()}</p>
-        <p>
-          {Object.values(filteredCountries[0].languages).length === 1 ? 'Language' : 'Languages'}: 
-          {` ${Object.values(filteredCountries[0].languages).join(', ')}`}
-        </p>
-        <img
-          src={filteredCountries[0].flags.png}
-          alt={`Flag of ${filteredCountries[0].name.common}`}
-        />
-      </div>
-    )}
+
+      {/* Render selected country if one is chosen explicitly */}
+      {selectedCountry && <CountryDetails country={selectedCountry} />}
+
+      {/* Only render this if no selected country */}
+      {!selectedCountry && filteredCountries.length === 1 && (
+        <CountryDetails country={filteredCountries[0]} />
+      )}
+
       {filteredCountries.length > 1 && filteredCountries.length <= 10 && (
         <ul>
           {filteredCountries.map(country => (
-            <li key={country.name.common}>{country.name.common}</li>
+            <li key={country.name.common}>
+              {country.name.common}
+              <button onClick={() => handleShow(country)}>Show</button>  
+            </li>
           ))}
+          
         </ul>
       )}
     </div>
