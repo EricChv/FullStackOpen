@@ -8,20 +8,30 @@ function App() {
   const [countries, setCountries] = useState([])
   const [filter, setFilter] = useState('')
   const [selectedCountry, setSelectedCountry] = useState(null)
+  const [darkMode, setDarkMode] = useState(false);
+
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value)
     setSelectedCountry(null) // Reset selected country when filter changes
   }
 
+  // Fetch countries data on initial render
   useEffect(() => {
     countriesService.getAll().then(data => setCountries(data))
   }, [])
 
+  // Toggle dark mode class on body
+  useEffect(() => {
+    document.body.classList.toggle('dark-mode', darkMode)
+  }, [darkMode])
+
+  // Filter countries based on the filter input
   const filteredCountries = countries.filter(country =>
     country.name.common.toLowerCase().includes(filter.toLowerCase())
   )
 
+  // Handle showing country details when a country is selected
   const handleShow = (country) => {
     console.log('Showing country:', country)
     setSelectedCountry(country)
@@ -30,6 +40,7 @@ function App() {
   return (
     <div>
       <h1 className="site-title">World Atlas</h1>
+      
       <Filter 
         filter={filter}
         handleFilterChange={handleFilterChange}
@@ -55,16 +66,22 @@ function App() {
       {filteredCountries.length > 1 && filteredCountries.length <= 10 && (
         <ul>
           {filteredCountries.map(country => (
-            <li key={country.name.common}>
-              {country.name.common}
-              <button onClick={() => handleShow(country)}>Show</button>  
+            <li key={country.name.common} className="country-item">
+              <span className="country-name">{country.name.common}</span>
+              <button onClick={() => handleShow(country)}>⌞ ⌝</button>  
             </li>
           ))}
           
         </ul>
       )}
+
+      <button 
+        className="dark-mode-toggle"
+        onClick={() => setDarkMode(!darkMode)}
+      >
+        Toggle {darkMode ? 'Light' : 'Dark'} Mode
+      </button>
     </div>
   )
 }
-
 export default App

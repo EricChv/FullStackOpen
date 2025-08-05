@@ -1,6 +1,6 @@
 const Filter = ({ filter, handleFilterChange }) => (
   <div>
-    <label htmlFor="country-filter">Find countries: </label>
+    <label htmlFor="country-filter">Find countries </label>
     <input
       id="country-filter"
       type="text"
