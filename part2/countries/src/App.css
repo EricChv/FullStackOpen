@@ -9,7 +9,7 @@
 
   /* Button-specific variables */
   --button-text-color: #ece6e0;
-  --button-bg-color: #2b372c;
+  --button-bg-color: #957b69; /* Dark green button background */
 }
 
 .dark-mode {
@@ -20,7 +20,7 @@
   --box-shadow: 0 1px 4px rgba(255, 255, 255, 0.05);
 
   /* Invert button colors */
-  --button-text-color: #2b372c;
+  --button-text-color: #121212;
   --button-bg-color: #ece6e0;
 }
 
@@ -41,34 +41,38 @@ body {
 }
 
 /* Utility class for gradient text */
-.gradient-text {
-  background: linear-gradient(to right, var(--primary-color), #c99c76);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 
 /* Title Styles */
 .site-title {
-  font-size: 3.5rem;
-  font-weight: 800;
+  font-size: 3.0rem;
+  font-weight: 400;
   margin-bottom: 2.5rem;
   letter-spacing: -1px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  
-  /* Apply gradient text */
-  composes: gradient-text; /* if using CSS Modules, otherwise: */
-  background: linear-gradient(to right, var(--primary-color), #957b69);
+  background:#957b69;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+.dark-mode .site-title {
+  background: #f6f5f4; /* cool neutral gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
 .country-title {
   font-size: 2.25rem;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 1rem;
+  background:#957b69;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-  /* Add gradient text: */
-  background: linear-gradient(to right, var(--primary-color), #957b69);
+
+.dark-mode .country-title {
+  background: #f6f5f4; /* warm accent gradient */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -85,14 +89,16 @@ body {
 .country-name {
   flex: 1;
   text-align: left;
-  font-weight: 500;
+  font-weight: 300;
 }
 
-/* Input Styles */
+/* Input Styles - Light Mode (default) */
 input {
   padding: 0.75rem;
   font-size: 1rem;
   width: 100%;
+  background: #f7f0e9;      /* off-white */
+  color: #3c2f2f;           /* brown text */
   max-width: 400px;
   margin-bottom: 1.5rem;
   border: 1px solid #2b372c;
@@ -104,6 +110,13 @@ input {
 input:focus {
   border-color: var(--primary-color);
   outline: 1px ridge rgba(62, 77, 44, 0.6);
+}
+
+/* Input Styles - Dark Mode Override */
+.dark-mode input {
+  background: #121212;   /* dark background */
+  color: #f7f0e9;        /* light text */
+  border: 1px solid #ece6e0;
 }
 
 button {
@@ -121,7 +134,7 @@ button {
 
 /* Hover effect */
 button:hover {
-  filter: brightness(0.7);
+  filter: brightness(0.9);
 }
 
 /* Country List */
@@ -147,6 +160,8 @@ li {
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   margin: 2rem auto;
+    font-weight: 300;
+
   max-width: 500px;
   text-align: center;
 }
@@ -174,10 +189,13 @@ p {
 }
 
 .dark-mode-toggle {
-  display: inline-block;
-  margin-top: 3rem; /* space above */
-  margin-bottom: 2rem; /* space below if needed */
-  padding: 0.6rem 1rem;
+  position: fixed;
+  bottom:20px;
+  left: 50%;
+  transform: translateX(-60%);
+  z-index: 1000;
+
+  padding: 0.3rem 1rem;
   font-size: 0.95rem;
   background-color: var(--button-bg-color);
   color: var(--button-text-color);
@@ -189,7 +207,7 @@ p {
 }
 
 .dark-mode-toggle:hover {
-  filter: brightness(0.7); /* darker version */
+  filter: brightness(0.9); /* darker version */
 }
 
 /* Responsive */
