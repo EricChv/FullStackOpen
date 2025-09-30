@@ -33,7 +33,7 @@ function CountryDetails({ country }) {
         <div className="weather">
           <h3>Weather in {country.capital}</h3>
           <p>Condition: {weather.weather[0].description}</p>
-          <img
+          <img className="weather-condition"
             src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
             alt={weather.weather[0].description}
           />
