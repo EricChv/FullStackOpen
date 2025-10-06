@@ -1,7 +1,15 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
+// body-parsing (for JSON bodies)
 app.use(express.json())
+
+// "middleware"
+morgan.token('body', (req) => {
+  return JSON.stringify(req.body)
+})
+app.use(morgan(':method :url :status :response-time ms - :body'))
 
 let persons = [
   { 
@@ -89,10 +97,39 @@ app.post('/api/persons', (request, response) => {
   response.json(person)
 })
 
+// PUT test
+app.put('/api/persons/:id', (request, response) => {
+  const body = request.body
+
+  console.log('BODY:', request.body)
+
+  if (!body.name || !body.number) {
+    return response.status(400).json({ error: 'The name or number is missing' })
+  }
+
+  const id = request.params.id
+  const person = persons.find(p => p.id === id)
+
+  if (!person) {
+    return response.status(404).json({ error: 'Person not found' })
+  }
+
+  const updatedPerson = { ...person, name: body.name, number: body.number }
+  persons = persons.map(p => (p.id === id ? updatedPerson : p))
+  response.json(updatedPerson)
+})
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
+
 
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
-  console.log('http://localhost:3001/api/persons')
-  console.log('http://localhost:3001/info')
+  console.log(`http://localhost:${PORT}/api/persons`)
+  console.log(`http://localhost:${PORT}/info`)
 })
