@@ -81,6 +81,11 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault() // prevent page reload
 
+    // check if empty name or number
+    if (newName.trim() === '' || newNumber.trim() === '') {
+      showNotification(`Name and number cannot be empty.`, 'errorNotification')
+      return
+    }
     // Check if the person already exists (same name)
     const existingPerson = persons.find(person =>
       person.name.toLowerCase() === newName.toLowerCase()
@@ -133,7 +138,7 @@ const App = () => {
   // UI (JSX) to render
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
 
       {/* Notification banner */}
       <Notification message={notificationMessage} type={notificationType}/>
