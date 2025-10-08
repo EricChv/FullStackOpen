@@ -1,12 +1,22 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
 h1 {
   color: green;
-  font-style: italic;
+  font-style: oblique;
 }
 
 .note {
-  color: gray;
+  color: white;
   padding-top: 5px;
   font-size: 15px;
+}
+
+.note button {
+  margin-left: 15px;
 }
 
 .error {
