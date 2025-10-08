@@ -4,8 +4,25 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static('dist'))
 
-let notes = []
+let notes = [
+  {
+    "id": "1",
+    "content": "HTML is easy",
+    "important": false
+  },
+  {
+    "id": "2",
+    "content": "Browser can execute only JavaScript",
+    "important": false
+  },
+  {
+    "id": "3",
+    "content": "GET and POST are the most important methods of HTTP protocol",
+    "important": false
+  }
+]
 
 app.get('/api/notes', (request, response) => {
   response.json(notes)
