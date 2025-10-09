@@ -1,0 +1,7 @@
+PUT http://localhost:3001/persons/1
+Content-Type: application/json
+
+{
+  "name": "Updated Name",
+  "number": "999-999-9999"
+}

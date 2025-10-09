@@ -86,6 +86,7 @@ const App = () => {
       showNotification(`Name and number cannot be empty.`, 'errorNotification')
       return
     }
+    
     // Check if the person already exists (same name)
     const existingPerson = persons.find(person =>
       person.name.toLowerCase() === newName.toLowerCase()
