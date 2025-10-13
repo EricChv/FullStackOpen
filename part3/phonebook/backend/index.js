@@ -87,5 +87,5 @@ const BASE_URL = `http://localhost:${PORT}`
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
   console.log(`http://localhost:${PORT}`)
-  console.log(`${BASE_URL}/api/notes`)
+  console.log(`${BASE_URL}/persons`)
 })
