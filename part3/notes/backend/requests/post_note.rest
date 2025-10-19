@@ -1,0 +1,17 @@
+POST http://localhost:3001/api/notes/
+Content-Type: application/json
+
+# {
+#   "content": "HTML is Easy",
+#   "important": "true" 
+# } 
+
+# {
+#   "content": "Mongoose makes use of mongo easy",
+#   "important": "true" 
+# } 
+
+{
+  "content": "React is a front-end JavaScript library for building user interfaces based on components.",
+  "important": "true" 
+} 

@@ -11,11 +11,19 @@ const App = () => {
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
 
+  // useEffect(() => {
+  //   noteService
+  //     .getAll()
+  //     .then((initialNotes) => {
+  //       setNotes(initialNotes.map)
+  //   })
+  // }, [])
+
   useEffect(() => {
     noteService
       .getAll()
-      .then((initialNotes) => {
-        setNotes(initialNotes)
+      .then(initialNotes => {
+        setNotes(initialNotes.map(n => ({ ...n, id: n.id })))
     })
   }, [])
 
