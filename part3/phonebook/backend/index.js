@@ -1,85 +1,68 @@
+require('dotenv').config()
+
 const express = require('express')
 const app = express()
-const cors = require('cors')
-const fs = require('fs')
+
+
+// import the Person model (schema + helper methods)
+const Person = require('./models/person')
 
 // Middleware
-app.use(cors())
 app.use(express.json())
 
-// Read data from db.json
-const getPersons = () => {
-  const data = fs.readFileSync('db.json', 'utf-8')
-  return JSON.parse(data).persons
-}
-
 // GET all persons
-app.get('/persons', (req, res) => {
-  res.json(getPersons())
+app.get('/persons', (request, response) => {
+  Person.find({})
+    .then(persons => response.json(persons))
 })
 
 // GET a single person by id
 app.get('/persons/:id', (req, res) => {
-  const persons = getPersons()
-  const person = persons.find(p => String(p.id) === req.params.id)
-  if (person) {
-    res.json(person)
-  } else {
-    res.status(404).end()
-  }
+  Person.findById(req.params.id)
+    .then(person => {
+      if (person) {
+        res.json(person)
+      } else {
+        res.status(404).end()
+      }
+    })
+    .catch(err => res.status(400).json({ error: err.message }))
 })
 
 // POST a new person
 app.post('/persons', (req, res) => {
-  const persons = getPersons()
-  const newPerson = req.body
-
-  // Simple ID generation
-  newPerson.id = persons.length > 0 // if persons exist
-  ? Math.max(...persons.map(p => p.id)) + 1 // do this (max id + 1)
-  : 1 // else start at 1
-  
-  persons.push(newPerson)
-
-  // Save to db.json
-  fs.writeFileSync('db.json', JSON.stringify({ persons }, null, 2))
-  res.status(201).json(newPerson)
+  const newPerson = new Person(req.body)
+  newPerson.save()
+    .then(savedPerson => res.json(savedPerson))
+    .catch(err => res.status(400).json({ error: err.message }))
 })
 
 // PUT update a person by id
-app.put('/persons/:id',  (req, res) => {
-  const persons = getPersons()
-  const personIndex = persons.findIndex(p => String(p.id) === req.params.id)
-
-  if (personIndex !== -1) {
-    const updatedPerson = { ...persons[personIndex], ...req.body }
-    persons[personIndex] = updatedPerson
-
-    // Save to db.json
-    fs.writeFileSync('db.json', JSON.stringify({ persons }, null, 2))
-    res.json(updatedPerson)
-  } else {
-    res.status(404).end()
-  }
+app.put('/persons/:id', (req, res) => {
+  Person.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+    .then(updatedPerson => {
+      if (updatedPerson) res.json(updatedPerson)
+      else res.status(404).end()
+    })
+    .catch(err => res.status(400).json({ error: err.message }))
 })
 
 // DELETE a person by id
-app.delete('/persons/:id', (req, res) => {
-  let persons = getPersons()
-  const personIndex = persons.findIndex(p => String(p.id) === req.params.id)
-
-  if (personIndex !== -1) {
-    persons = persons.filter(p => String(p.id) !== req.params.id)
-
-    // Save to db.json
-    fs.writeFileSync('db.json', JSON.stringify({ persons }, null, 2))
-    res.status(204).end()
-  } else {
-    res.status(404).end()
-  }
+app.delete('/persons/:id', (req, response) => {
+  Person.findByIdAndDelete(req.params.id)
+    .then(result => {
+      if (result) {
+          response.status(204).end() // Successfully deleted
+        } else {
+          response.status(404).end() // Not found
+        }
+      })
+      .catch(err => response.status(400).json({ error: err.message }))
 })
 
 app.use(express.static('dist'))
+
+
 
 // Start the server
 const PORT = process.env.PORT || 3001

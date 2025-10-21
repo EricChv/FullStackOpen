@@ -16,6 +16,7 @@ const App = () => {
   // Fetch the initial list of contacts when the component loads (runs once)
   useEffect(() => {
     personService.getAll().then(initialPersons => {
+      console.log('initialPersons:', initialPersons)
       setPersons(initialPersons) // Save the contacts to state
     })
   }, []) // empty dependency array = run only once when page loads

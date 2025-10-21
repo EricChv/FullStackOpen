@@ -1,53 +1,53 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #282c34;
-  color: white;
+/* Base styles: do not assume dark or light, handled by media queries */
+html, body {
+  height: 100%;
+  margin: 0;
   padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.successNotification {
-  display: inline-block;
-  color: white;
-  background: rgb(0, 95, 0);
-  font-size: 20px;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 20px;
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #282c34;
+    color: white;
+  }
+
+  .successNotification {
+    color: white;
+    background: rgb(0, 95, 0);
+  }
+
+  .errorNotification {
+    color: white;
+    background: rgb(163, 1, 1);
+  }
+
+  .person-delete-btn:hover {
+    background-color: rgb(163, 1, 1);
+    color: white;
+  }
 }
 
-.errorNotification {
-  display: inline-block;
-  color: white;
-  background: rgb(163, 1, 1);
-  font-size: 20px;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.person-delete-btn {
-  border: none;
-  padding: 4px 5px;
-  margin-left: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.person-delete-btn:hover {
-  background-color: rgb(163, 1, 1);
-  color: white;
-}
-
+/* Light mode */
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
+  html, body {
     background-color: #ffffff;
+    color: #213547;
   }
-  a:hover {
-    color: #747bff;
+
+  .successNotification {
+    color: white;
+    background: rgb(0, 128, 0);
   }
-  button {
-    background-color: #f9f9f9;
+
+  .errorNotification {
+    color: white;
+    background: rgb(255, 0, 0);
+  }
+
+  .person-delete-btn:hover {
+    background-color: rgb(255, 0, 0);
+    color: white;
   }
 }
