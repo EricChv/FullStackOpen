@@ -12,6 +12,6 @@ Content-Type: application/json
 # } 
 
 {
-  "content": "React is a front-end JavaScript library for building user interfaces based on components.",
+  "content": "test 2",
   "important": "true" 
 } 
